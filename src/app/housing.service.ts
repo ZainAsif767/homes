@@ -6,7 +6,7 @@ import { HousingLocation } from './housing-location';
 })
 export class HousingService {
 
-  url = 'https://localhost:3000/locations';
+  url = 'http://localhost:3000/locations';
 
   async getAllHousingLocations():
     Promise<HousingLocation[]> {
@@ -22,8 +22,9 @@ export class HousingService {
   async getHousingLocationById(id: number):
     Promise<HousingLocation | undefined> {
     try {
-      const data = await fetch(`${this.url}/${id}`);
-      return await data.json() ?? {};
+      const data = await fetch(`${this.url}`);
+      let result = await data.json();
+      return result?.find((element: any) => element.id == id) ?? {};
     } catch (error) {
       console.log('Error fetching data by ID:', error);
       throw error;
